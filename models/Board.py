@@ -25,14 +25,12 @@ class Board:
                 return True
         return False
 
-    def _get_number_of_moves_left(self):
-        number_of_moves_left = 0
+    def _check_if_no_moves_left(self):
         for row in range(3):
             for col in range(3):
-                if self.game_board[row][col] != 'X' or self.game_board[row][col] != 'O':
-                    number_of_moves_left += 1
-
-        return number_of_moves_left
+                if self.game_board[row][col] != 'X' and self.game_board[row][col] != 'O':
+                    return False
+        return True
 
     def _get_row_and_column_indices_of_position(self, position):
         for row in range(3):
@@ -62,10 +60,10 @@ class Board:
         self.game_board[row][column] = piece
 
     def get_game_state(self):
-        if self._get_number_of_moves_left() == 0:
-            return self.game_states.DRAW
         if self._check_rows_for_winner() or self._check_columns_for_winner() or self._check_diagonals_for_winner():
             return self.game_states.WINNER
+        if self._check_if_no_moves_left():
+            return self.game_states.DRAW
         return self.game_states.ONGOING
 
     # def display(self):
