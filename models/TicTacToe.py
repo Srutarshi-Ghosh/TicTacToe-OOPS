@@ -13,7 +13,7 @@ class TicTacToe:
         self.game_state = GameState.ONGOING
 
     def update_board(self, selected_position):
-        player_piece = self.current_player.get_game_piece()
+        player_piece = self.current_player.game_piece
         self.board.update_game_board(selected_position, player_piece)
 
     def get_game_state(self):
