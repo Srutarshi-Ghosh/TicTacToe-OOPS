@@ -50,6 +50,9 @@ class MyTestCase(unittest.TestCase):
 
 
 
-
 if __name__ == '__main__':
+    import sys
+
+    for line in sys.path:
+        print(line)
     unittest.main()

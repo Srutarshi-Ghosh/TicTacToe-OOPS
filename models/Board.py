@@ -66,14 +66,12 @@ class Board:
             return self.game_states.DRAW
         return self.game_states.ONGOING
 
-    # def display(self):
-    #     for row in range(3):
-    #         for col in range(3):
-    #             if self.game_board[row][col] != 'X' and self.game_board[row][col] != 'O':
-    #                 print(' _ ', end="")
-    #             else:
-    #                 print(' {} '.format(self.game_board[row][col]), end="")
-    #         print()
-    #     print()
-    #
-    #     print(self.game_board)
+    def display(self):
+        for row in range(3):
+            for col in range(3):
+                if self.game_board[row][col] != 'X' and self.game_board[row][col] != 'O':
+                    print(' _ ', end="")
+                else:
+                    print(' {} '.format(self.game_board[row][col]), end="")
+            print()
+        print()

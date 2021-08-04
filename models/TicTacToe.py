@@ -1,7 +1,7 @@
 from models.Player import Player
 from models.Board import Board
 from models.GameState import GameState
-
+from models.Errors import PositionNotValidError
 
 class TicTacToe:
 
@@ -25,30 +25,49 @@ class TicTacToe:
         else:
             self.current_player = self.player1
 
-    # def show_board(self):
-    #     return self.board.display()
+    def show_board(self):
+        return self.board.display()
+    
+    def check_game_over(self):
+        self.game_state = self.board.get_game_state()
+        return self.game_state == GameState.WINNER or self.game_state == GameState.DRAW
+    
+    def make_move(self):
+        print("{}'s turn: ".format(self.current_player.name))
+        position = input()
+        try:
+            self.update_board(position)
+        except PositionNotValidError as error:
+            print(error)
+            self.make_move()
 
-    # @staticmethod
-    # def show_game_instructions():
-    #     print("\nEnter a value between 1-9: ")
-    #     print("Positions of each number are as follows")
-    #     print(" 1 | 2 | 3")
-    #     print("-----------")
-    #     print(" 4 | 5 | 6")
-    #     print("-----------")
-    #     print(" 7 | 8 | 9\n")
+    @staticmethod
+    def show_game_instructions():
+        print("\nEnter a value between 1-9: ")
+        print("Positions of each number are as follows")
+        print(" 1 | 2 | 3")
+        print("-----------")
+        print(" 4 | 5 | 6")
+        print("-----------")
+        print(" 7 | 8 | 9\n")
+        
+    def show_game_result(self):
+        if self.game_state == GameState.DRAW:
+            print("Game is a Draw")
+        else:
+            print("{} won the game".format(self.current_player.name))
 
-    # def play_game(self):
-    #     self.new_game()
-    #     game_over = False
-    #     game_result = None
-    #
-    #     while not game_over:
-    #         self.show_game_instructions()
-    #         self.make_move()
-    #         self.show_board()
-    #         game_over, game_state = self.check_game_over()
-    #         self.switch_player()
-    #
-    #     print(game_result)
+
+    def play_game(self):
+        game_over = False
+
+        while not game_over:
+            self.show_game_instructions()
+            self.make_move()
+            self.show_board()
+            game_over = self.check_game_over()
+            if not game_over:
+                self.switch_current_player()
+
+        self.show_game_result()
 
